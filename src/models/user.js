@@ -11,10 +11,10 @@ const userSchema = new mongoose.Schema({
         type: String,
     },
     password: {
-        tpye: String,
+        type: String,
     },
-    phoneNumber: {
-        tpye: Number,
+    age: {
+        type: Number,
     },
 });
 
