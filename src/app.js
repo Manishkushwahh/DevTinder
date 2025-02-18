@@ -1,36 +1,33 @@
 const express = require("express");
+const connectDB = require("./config/database");
 const app = express();
+const User = require("./models/user");
 
-app.get("/user", (req,res,next) => {
-    console.log("1st handler");
-    // res.send("Response");
-    next();
+app.post("/signup", async (req,res) => {
+    //creating an instance of User model
+    const user = new User({
+        firstName: "Maish",
+        lastName: "Kushwah",
+        email: "manihskushwah169@gmail.com",
+        password: "manishh169",
+        phoneNumber: "8394971925",
+    });
+
+    try{
+        await user.save();
+        res.send("User Added successfully");
+    }catch(error){
+        res.status(400).send("Error... cannot send data" + error.message);
+    }
 });
 
-app.get("/user", (req,res,next) => {
-    console.log("2nd handler");
-    // res.send("2nd Response");
-    next();
-});
-
-app.get("/user", (req,res,next) => {
-    console.log("3rd handler");
-    // res.send("3rd Response");
-    next();
-});
-
-app.get("/user", (req,res,next) => {
-    console.log("4th handler");
-    // res.send("4th Response");
-    next();
-});
-
-app.get("/user", (req,res,next) => {
-    console.log("5th handler");
-    res.send("5th Response");
-    // next();
-});
-
-app.listen(3000, ()=> {
-    console.log("Server is succussfully listening on port 3000...");
-});
+connectDB()
+    .then(() => {
+        console.log("Successfully connected to Database");
+        app.listen(7777, () => {
+            console.log("Server is successfully listening on port 7777...");
+        });
+    })
+    .catch((error) => {
+        console.error("Cannot connect to database");
+    });
